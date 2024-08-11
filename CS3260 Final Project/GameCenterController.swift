@@ -32,60 +32,17 @@ import SwiftData
 //	var oceans = 0
 //	var myMatch: GKMatch? = nil
 //}
-@Model
-class GameData: Identifiable{
-	@Transient var id = UUID()
-	var matchName: String
-	var creationDate: Date = Date.now
-	@Attribute(.externalStorage) var opponents: [Player] = []
-//	@Published var oppenents: [Player] = [Player(playerName: "Bob")]
-
-	@Attribute(.externalStorage) var userPlayer: Player? = nil
-
-	var phases: [(name: String, playing: Int)] = [
-		(name: "Development", playing: 0),
-		(name:"Construction", playing: 0),
-		(name: "Action", playing: 0),
-		(name: "Production", playing: 1),
-		(name: "Research", playing: 0),
-	]
-	var phase: (name: String, playing: Int)?{
-		phases.first(where: {$0.1 == 1})
-	}
-	var oxygen = 0
-	var tempeture = -30
-	var oceans = 0
-	var myMatch: GKMatch? = nil
-	
-	init(matchName: String){
-		self.matchName = matchName
-	}
-	
-	init(id: UUID = UUID(), matchName: String, creationDate: Date = .now, userPlayer: Player? = nil, oppenents: [Player], phases: [(name: String, playing: Int)], oxygen: Int = 0, tempeture: Int = 30, oceans: Int = 0, myMatch: GKMatch? = nil) {
-		self.id = id
-		self.matchName = matchName
-		self.creationDate = creationDate
-		self.userPlayer = userPlayer
-		self.opponents = oppenents
-		self.phases = phases
-		self.oxygen = oxygen
-		self.tempeture = tempeture
-		self.oceans = oceans
-		self.myMatch = myMatch
-	}
-
-}
-
-//class GameData: ObservableObject, Identifiable{
-//	@Published var id = UUID()
-//	@Published var matchName: String
-//	@Published var creationDate: Date = Date()
-//	@Published var opponents: [Player] = []
+//@Model
+//class GameData: Identifiable{
+//	@Transient var id = UUID()
+//	var matchName: String
+//	var creationDate: Date = Date.now
+//	@Attribute(.externalStorage) var opponents: [Player] = []
 ////	@Published var oppenents: [Player] = [Player(playerName: "Bob")]
 //
-//	@Published var userPlayer: Player? = nil
+//	@Attribute(.externalStorage) var userPlayer: Player? = nil
 //
-//	@Published var phases: [(name: String, playing: Int)] = [
+//	var phases: [(name: String, playing: Int)] = [
 //		(name: "Development", playing: 0),
 //		(name:"Construction", playing: 0),
 //		(name: "Action", playing: 0),
@@ -95,16 +52,16 @@ class GameData: Identifiable{
 //	var phase: (name: String, playing: Int)?{
 //		phases.first(where: {$0.1 == 1})
 //	}
-//	@Published var oxygen = 0
-//	@Published var tempeture = -30
-//	@Published var oceans = 0
-//	@Published var myMatch: GKMatch? = nil
+//	var oxygen = 0
+//	var tempeture = -30
+//	var oceans = 0
+//	var myMatch: GKMatch? = nil
 //	
 //	init(matchName: String){
 //		self.matchName = matchName
 //	}
 //	
-//	init(id: UUID = UUID(), matchName: String, creationDate: Date, userPlayer: Player? = nil, oppenents: [Player], phases: [(name: String, playing: Int)], oxygen: Int = 0, tempeture: Int = 30, oceans: Int = 0, myMatch: GKMatch? = nil) {
+//	init(id: UUID = UUID(), matchName: String, creationDate: Date = .now, userPlayer: Player? = nil, oppenents: [Player], phases: [(name: String, playing: Int)], oxygen: Int = 0, tempeture: Int = 30, oceans: Int = 0, myMatch: GKMatch? = nil) {
 //		self.id = id
 //		self.matchName = matchName
 //		self.creationDate = creationDate
@@ -118,6 +75,51 @@ class GameData: Identifiable{
 //	}
 //
 //}
+
+
+
+class GameData: ObservableObject, Identifiable{
+	@Published var id = UUID()
+	@Published var matchName: String
+	@Published var creationDate: Date = Date()
+	@Published var opponents: [Player] = []
+//	@Published var oppenents: [Player] = [Player(playerName: "Bob")]
+
+	@Published var userPlayer: Player? = nil
+
+	@Published var phases: [(name: String, playing: Int)] = [
+		(name: "Development", playing: 0),
+		(name:"Construction", playing: 0),
+		(name: "Action", playing: 0),
+		(name: "Production", playing: 1),
+		(name: "Research", playing: 0),
+	]
+	var phase: (name: String, playing: Int)?{
+		phases.first(where: {$0.1 == 1})
+	}
+	@Published var oxygen = 0
+	@Published var tempeture = -30
+	@Published var oceans = 0
+	@Published var myMatch: GKMatch? = nil
+	
+	init(matchName: String){
+		self.matchName = matchName
+	}
+	
+	init(id: UUID = UUID(), matchName: String, creationDate: Date, userPlayer: Player? = nil, oppenents: [Player], phases: [(name: String, playing: Int)], oxygen: Int = 0, tempeture: Int = 30, oceans: Int = 0, myMatch: GKMatch? = nil) {
+		self.id = id
+		self.matchName = matchName
+		self.creationDate = creationDate
+		self.userPlayer = userPlayer
+		self.opponents = oppenents
+		self.phases = phases
+		self.oxygen = oxygen
+		self.tempeture = tempeture
+		self.oceans = oceans
+		self.myMatch = myMatch
+	}
+
+}
 
 struct barControls{
 	var range: ClosedRange<Int>
@@ -408,6 +410,12 @@ extension GameKitController: GKLocalPlayerListener {
 	
 }
 
+extension GameKitController{
+	func loadSavedGame(_ player: GKPlayer){
+		
+	}
+	
+}
 
 extension GameKitController: GKMatchmakerViewControllerDelegate {
 	/// Dismisses the matchmaker interface and starts the game when a player accepts an invitation.

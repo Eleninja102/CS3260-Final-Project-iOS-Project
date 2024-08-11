@@ -28,6 +28,6 @@ struct CS3260_Final_ProjectApp: App {
             ContentView()
         }
         .modelContainer(sharedModelContainer)
-		.modelContainer(for: GameData.self)
+
     }
 }

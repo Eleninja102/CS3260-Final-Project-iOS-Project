@@ -75,6 +75,38 @@ class Game: Identifiable{
 	}
 }
 
+class PlayerDetails: Identifiable, Codable{
+	var id = UUID()
+	var playerName: String
+	
+	var gamePlayerID: String
+	
+	var vp: Int = 0
+	var tr: Int = 0
+	var trees: Int = 0
+	var megaCoins: Int = 0
+	var megaCoinsProduction: Int = 4
+   
+	var heat: Int = 0
+	var heatProduction: Int = 2
+   
+	var plants: Int = 0
+	var plantsProduction: Int = 3
+   
+	var steel: Int = 2
+	var steelDiscount: Int = 2
+	var titanium: Int = 3
+	var titaniumDiscount: Int = 3
+   
+	var cardProduction: Int = 2
+   
+	var readyForNextRound: Bool = false
+	var readyForNextPhase: Bool = false
+   
+	var selectedPhase: String = ""
+   
+}
+
 struct Player: Identifiable{
 	var id = UUID()
 
