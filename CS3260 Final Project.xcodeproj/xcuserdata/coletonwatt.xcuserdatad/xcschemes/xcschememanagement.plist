@@ -4,10 +4,33 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>CS3260 Final Project 1.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>CS3260 Final Project.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1D631A4E2BEDA43100452D02</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1D631A602BEDA43200452D02</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1D631A6A2BEDA43200452D02</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
