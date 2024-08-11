@@ -10,18 +10,39 @@ import Foundation
 import GameKit
 import SwiftUI
 import Combine
+import SwiftData
+//struct TerraformingMarsGameData: Identifiable{
+//	var id = UUID()
+//	var matchName: String
+//	var creationDate: Date = Date()
+//	var oppenents: [Player] = []
+//	var userPlayer: Player? = nil
+//	var phases: [(name: String, playing: Int)] = [
+//		(name: "Development", playing: 0),
+//		(name:"Construction", playing: 0),
+//		(name: "Action", playing: 0),
+//		(name: "Production", playing: 1),
+//		(name: "Research", playing: 0),
+//	]
+//	var phase: (name: String, playing: Int)?{
+//		phases.first(where: {$0.1 == 1})
+//	}
+//	var oxygen = 0
+//	var tempeture = -30
+//	var oceans = 0
+//	var myMatch: GKMatch? = nil
+//}
+@Model
+class GameData: Identifiable{
+	@Transient var id = UUID()
+	var matchName: String
+	var creationDate: Date = Date.now
+	@Attribute(.externalStorage) var opponents: [Player] = []
+//	@Published var oppenents: [Player] = [Player(playerName: "Bob")]
 
+	@Attribute(.externalStorage) var userPlayer: Player? = nil
 
-class GameData: ObservableObject, Identifiable{
-	@Published var id = UUID()
-	@Published var matchName: String
-	@Published var creationDate: Date = Date()
-//	@Published var oppenents: [Player] = []
-	@Published var oppenents: [Player] = [Player(playerName: "Bob")]
-
-	@Published var userPlayer: Player? = nil
-
-	@Published var phases: [(name: String, playing: Int)] = [
+	var phases: [(name: String, playing: Int)] = [
 		(name: "Development", playing: 0),
 		(name:"Construction", playing: 0),
 		(name: "Action", playing: 0),
@@ -31,21 +52,21 @@ class GameData: ObservableObject, Identifiable{
 	var phase: (name: String, playing: Int)?{
 		phases.first(where: {$0.1 == 1})
 	}
-	@Published var oxygen = 0
-	@Published var tempeture = -30
-	@Published var oceans = 0
-	@Published var myMatch: GKMatch? = nil
+	var oxygen = 0
+	var tempeture = -30
+	var oceans = 0
+	var myMatch: GKMatch? = nil
 	
 	init(matchName: String){
 		self.matchName = matchName
 	}
 	
-	init(id: UUID = UUID(), matchName: String, creationDate: Date, userPlayer: Player? = nil, oppenents: [Player], phases: [(name: String, playing: Int)], oxygen: Int = 0, tempeture: Int = 30, oceans: Int = 0, myMatch: GKMatch? = nil) {
+	init(id: UUID = UUID(), matchName: String, creationDate: Date = .now, userPlayer: Player? = nil, oppenents: [Player], phases: [(name: String, playing: Int)], oxygen: Int = 0, tempeture: Int = 30, oceans: Int = 0, myMatch: GKMatch? = nil) {
 		self.id = id
 		self.matchName = matchName
 		self.creationDate = creationDate
 		self.userPlayer = userPlayer
-		self.oppenents = oppenents
+		self.opponents = oppenents
 		self.phases = phases
 		self.oxygen = oxygen
 		self.tempeture = tempeture
@@ -54,6 +75,49 @@ class GameData: ObservableObject, Identifiable{
 	}
 
 }
+
+//class GameData: ObservableObject, Identifiable{
+//	@Published var id = UUID()
+//	@Published var matchName: String
+//	@Published var creationDate: Date = Date()
+//	@Published var opponents: [Player] = []
+////	@Published var oppenents: [Player] = [Player(playerName: "Bob")]
+//
+//	@Published var userPlayer: Player? = nil
+//
+//	@Published var phases: [(name: String, playing: Int)] = [
+//		(name: "Development", playing: 0),
+//		(name:"Construction", playing: 0),
+//		(name: "Action", playing: 0),
+//		(name: "Production", playing: 1),
+//		(name: "Research", playing: 0),
+//	]
+//	var phase: (name: String, playing: Int)?{
+//		phases.first(where: {$0.1 == 1})
+//	}
+//	@Published var oxygen = 0
+//	@Published var tempeture = -30
+//	@Published var oceans = 0
+//	@Published var myMatch: GKMatch? = nil
+//	
+//	init(matchName: String){
+//		self.matchName = matchName
+//	}
+//	
+//	init(id: UUID = UUID(), matchName: String, creationDate: Date, userPlayer: Player? = nil, oppenents: [Player], phases: [(name: String, playing: Int)], oxygen: Int = 0, tempeture: Int = 30, oceans: Int = 0, myMatch: GKMatch? = nil) {
+//		self.id = id
+//		self.matchName = matchName
+//		self.creationDate = creationDate
+//		self.userPlayer = userPlayer
+//		self.opponents = oppenents
+//		self.phases = phases
+//		self.oxygen = oxygen
+//		self.tempeture = tempeture
+//		self.oceans = oceans
+//		self.myMatch = myMatch
+//	}
+//
+//}
 
 struct barControls{
 	var range: ClosedRange<Int>
@@ -73,9 +137,12 @@ class GameKitController: NSObject, ObservableObject{
 	@Published var maxPlayers = 2
 	@Published var minPlayers = 2
 	@Published var userPlayer: Player? = nil
+//	@Published var userPlayer: Player = Player(playerName: "Bpb")
 	@Published var user: GKLocalPlayer? = nil
 	@Published var savedGames: [GameData] = []
-	@Published var activeGame: GameData? = GameData(matchName: "bob")
+//	@Published var activeGame: GameData? = GameData(matchName: "bob"
+	@Published var activeGame: GameData? = nil
+
 	@Published var gameSaveName: String = ""
 	
 	var oxygenRange: barControls = barControls(range: 0...14, increament: 1, purpleRange: 0...2, redRange: 3...6, yellowRange: 7...11, whiteRange: 12...14)
@@ -86,7 +153,9 @@ class GameKitController: NSObject, ObservableObject{
 		GKLocalPlayer.local.displayName
 	}
 	
-	
+	func update() {
+		objectWillChange.send()
+	}
 	
 
 	var rootViewController: UIViewController? {
@@ -232,13 +301,23 @@ class GameKitController: NSObject, ObservableObject{
 	
 	func loadSavedGame(savedGame: GameData){
 		activeGame = savedGame
-		startMatchmaking()
+		let request = GKMatchRequest()
+		request.minPlayers = minPlayers
+		request.maxPlayers = maxPlayers
+		if let matchMakingVs = GKMatchmakerViewController(matchRequest: request){
+			matchMakingVs.matchmakerDelegate = self
+			rootViewController?.present(matchMakingVs, animated: true) { }
+		}
 	}
+
 	
 	func startMyMatchWith(match: GKMatch){
 		GKAccessPoint.shared.isActive = false
-		savedGames.append(GameData(matchName: "New Game"))
-		self.activeGame = savedGames.last
+		if(activeGame == nil){
+			savedGames.append(GameData(matchName: gameSaveName))
+			self.activeGame = savedGames.last
+
+		}
 		activeGame?.myMatch = match
 		activeGame?.myMatch?.delegate = self
 		
@@ -251,7 +330,12 @@ class GameKitController: NSObject, ObservableObject{
 					let playerImage = image == nil ? Image(systemName: "person.crop.circle"): Image(uiImage: image!)
 					let newPlayer = Player(playerName: player2.displayName, player: player2, avatar: playerImage)
 					DispatchQueue.main.async {
-						self.activeGame?.oppenents.append(newPlayer)
+						if self.activeGame?.opponents.contains(where: { $0.player?.gamePlayerID == newPlayer.player?.gamePlayerID }) ?? false {
+							print("TRUEEE")
+						}else{
+							self.activeGame?.opponents.append(newPlayer)
+
+						}
 					}
 				}
 			}
@@ -269,7 +353,7 @@ class GameKitController: NSObject, ObservableObject{
 		
 		print(parameter)
 		
-		for oppenent in activeGame!.oppenents {
+		for oppenent in activeGame!.opponents {
 			print(oppenent)
 		}
 		
@@ -279,13 +363,13 @@ class GameKitController: NSObject, ObservableObject{
 		case "ready":
 			break
 		case "roundReady":
-			if let opponent = activeGame!.oppenents.firstIndex(where: {$0.player?.gamePlayerID ?? "1" == parameter}){
-				self.activeGame!.oppenents[opponent].readyForNextRound = true
+			if let opponent = activeGame!.opponents.firstIndex(where: {$0.player?.gamePlayerID ?? "1" == parameter}){
+				self.activeGame!.opponents[opponent].readyForNextRound = true
 			}
 		case "phaseReady":
-			if let opponent = activeGame!.oppenents.firstIndex(where: {($0.player?.gamePlayerID ?? "1") == String(parameter)}){
-				print(activeGame!.oppenents[opponent])
-				self.activeGame!.oppenents[opponent].readyForNextPhase = true
+			if let opponent = activeGame!.opponents.firstIndex(where: {($0.player?.gamePlayerID ?? "1") == String(parameter)}){
+				print(activeGame!.opponents[opponent])
+				self.activeGame!.opponents[opponent].readyForNextPhase = true
 			}
 		case "addPhase":
 			if let ph = activeGame!.phases.firstIndex(where: {$0.name == parameter}){
@@ -300,6 +384,8 @@ class GameKitController: NSObject, ObservableObject{
 		default:
 			break
 		}
+		
+		update()
 	}
 
 }

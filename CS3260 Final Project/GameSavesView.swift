@@ -38,7 +38,7 @@ struct GameSavesView: View {
 								Text(dateFormatter.string(from: save.creationDate))
 								HStack{
 									Text("Other Players:")
-									ForEach(save.oppenents){ player in
+									ForEach(save.opponents){ player in
 										HStack{
 											Text("\(player.playerName) - \(player.vp)")
 										}
@@ -99,7 +99,7 @@ struct GameSavesView: View {
 				
 			}
 			.fullScreenCover(isPresented: $game.playingGame, content: {
-//				PlayerDetailsView(playerDetails: $game.activeGame.userPlayer, gameKitContoller: game, game: game.activeGame!)
+				PlayerDetailsView(playerDetails: Binding($game.userPlayer) ?? $defaultPlayer, gameKitContoller: game, game: game.activeGame!)
 			})
 			
 	

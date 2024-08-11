@@ -32,7 +32,7 @@ struct PlayerDetailsView: View {
 			return false
 		}
 		var ready = playerDetails.readyForNextPhase
-		for oppenent in gameKitContoller.activeGame!.oppenents {
+		for oppenent in gameKitContoller.activeGame!.opponents {
 			ready = ready ? oppenent.readyForNextPhase : false
 		}
 		return ready
@@ -40,7 +40,7 @@ struct PlayerDetailsView: View {
 	
 	var everyoneReadyForNextRound: Bool{
 		var ready = playerDetails.readyForNextRound
-		for oppenent in gameKitContoller.activeGame!.oppenents {
+		for oppenent in gameKitContoller.activeGame!.opponents {
 			ready = ready ? oppenent.readyForNextRound : false
 		}
 		return ready
@@ -58,9 +58,9 @@ struct PlayerDetailsView: View {
 			gameKitContoller.activeGame!.phases[nextRoundIndex].playing = 1
 		
 		}
-		for oppenent in gameKitContoller.activeGame!.oppenents.indices {
-			gameKitContoller.activeGame!.oppenents[oppenent].readyForNextRound = false
-			gameKitContoller.activeGame!.oppenents[oppenent].readyForNextPhase = false
+		for oppenent in gameKitContoller.activeGame!.opponents.indices {
+			gameKitContoller.activeGame!.opponents[oppenent].readyForNextRound = false
+			gameKitContoller.activeGame!.opponents[oppenent].readyForNextPhase = false
 
 		}
 		
@@ -79,8 +79,8 @@ struct PlayerDetailsView: View {
 		if(finishedPhase && everyOneReadyForNextPhase){
 			finishedPhase = false
 		   playerDetails.readyForNextPhase = false
-		   for oppenent in gameKitContoller.activeGame!.oppenents.indices {
-			   gameKitContoller.activeGame!.oppenents[oppenent].readyForNextPhase = false
+		   for oppenent in gameKitContoller.activeGame!.opponents.indices {
+			   gameKitContoller.activeGame!.opponents[oppenent].readyForNextPhase = false
 		   }
 			if let ph = gameKitContoller.activeGame!.phases.firstIndex(where: {$0.1 == 1}){
 				gameKitContoller.activeGame!.phases[ph].playing = 0
@@ -269,8 +269,8 @@ struct PlayerDetailsView: View {
 				}
 				Spacer()
 				 Button(action: {
-					 for oppenent in gameKitContoller.activeGame!.oppenents.indices {
-						 gameKitContoller.activeGame!.oppenents[oppenent].readyForNextPhase = true
+					 for oppenent in gameKitContoller.activeGame!.opponents.indices {
+						 gameKitContoller.activeGame!.opponents[oppenent].readyForNextPhase = true
 					 }
 				 }){
 						 Text("Ready Up Everyone")
@@ -283,8 +283,8 @@ struct PlayerDetailsView: View {
 				 }
 				 
 				 Button(action: {
-					 for oppenent in gameKitContoller.activeGame!.oppenents.indices {
-						 gameKitContoller.activeGame!.oppenents[oppenent].readyForNextRound = true
+					 for oppenent in gameKitContoller.activeGame!.opponents.indices {
+						 gameKitContoller.activeGame!.opponents[oppenent].readyForNextRound = true
 					 }
 					}){
 						 Text("Ready Up Round")
@@ -319,8 +319,8 @@ struct PlayerDetailsView: View {
 								 if(finishedPhase && everyOneReadyForNextPhase){
 									 finishedPhase = false
 									playerDetails.readyForNextPhase = false
-									for oppenent in gameKitContoller.activeGame!.oppenents.indices {
-										gameKitContoller.activeGame!.oppenents[oppenent].readyForNextPhase = false
+									for oppenent in gameKitContoller.activeGame!.opponents.indices {
+										gameKitContoller.activeGame!.opponents[oppenent].readyForNextPhase = false
 									}
 									 if let ph = gameKitContoller.activeGame!.phases.firstIndex(where: {$0.1 == 1}){
 										 gameKitContoller.activeGame!.phases[ph].playing = 0
@@ -404,7 +404,7 @@ struct WaitingOnPlayer: View {
 					Text(playerDetails.playerName)
 				}
 				
-			ForEach(gameKitController.activeGame!.oppenents){ oppenent in
+			ForEach(gameKitController.activeGame!.opponents){ oppenent in
 					VStack{
 						ZStack{
 							oppenent.avatar
@@ -811,7 +811,7 @@ struct EndRound: View{
 			.disabled(playerDetails.readyForNextRound)
 			.padding()
 		ScrollView{
-			ForEach(gameData.oppenents){ oppenent in
+			ForEach(gameData.opponents){ oppenent in
 				HStack{
 					
 					oppenent.avatar

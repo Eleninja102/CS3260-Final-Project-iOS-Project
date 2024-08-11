@@ -75,85 +75,85 @@ class Game: Identifiable{
 	}
 }
 
-//struct Player: Identifiable{
-//	var id = UUID()
-//
-//	var playerName: String
-//	 var player: GKPlayer? = nil
-//	 var avatar = Image(systemName: "person.crop.circle")
-//	
-//	 var vp: Int = 0
-//	 var tr: Int = 0
-//	 var trees: Int = 0
-//	
-//	 var megaCoins: Int = 0
-//	 var megaCoinsProduction: Int = 4
-//	
-//	 var heat: Int = 0
-//	 var heatProduction: Int = 2
-//	
-//	 var plants: Int = 0
-//	 var plantsProduction: Int = 3
-//	
-//	 var steel: Int = 2
-//	 var steelDiscount: Int = 2
-//	 var titanium: Int = 3
-//	 var titaniumDiscount: Int = 3
-//	
-//	 var cardProduction: Int = 2
-//	
-//	 var readyForNextRound: Bool = false
-//	 var readyForNextPhase: Bool = false
-//	
-//	 var selectedPhase: String = ""
-//	
-//	 var nextRoundPhase: PhaseOptions = .None
-//}
-class Player: ObservableObject, Identifiable{
-	@Published var id = UUID()
+struct Player: Identifiable{
+	var id = UUID()
 
-	@Published var playerName: String
-	@Published var player: GKPlayer? = nil
-	@Published var avatar = Image(systemName: "person.crop.circle")
+	var playerName: String
+	 var player: GKPlayer? = nil
+	 var avatar = Image(systemName: "person.crop.circle")
 	
-	@Published var vp: Int = 0
-	@Published var tr: Int = 0
-	@Published var trees: Int = 0
+	 var vp: Int = 0
+	 var tr: Int = 0
+	 var trees: Int = 0
 	
-	@Published var megaCoins: Int = 0
-	@Published var megaCoinsProduction: Int = 4
+	 var megaCoins: Int = 0
+	 var megaCoinsProduction: Int = 4
 	
-	@Published var heat: Int = 0
-	@Published var heatProduction: Int = 2
+	 var heat: Int = 0
+	 var heatProduction: Int = 2
 	
-	@Published var plants: Int = 0
-	@Published var plantsProduction: Int = 3
+	 var plants: Int = 0
+	 var plantsProduction: Int = 3
 	
-	@Published var steel: Int = 2
-	@Published var steelDiscount: Int = 2
-	@Published var titanium: Int = 3
-	@Published var titaniumDiscount: Int = 3
+	 var steel: Int = 2
+	 var steelDiscount: Int = 2
+	 var titanium: Int = 3
+	 var titaniumDiscount: Int = 3
 	
-	@Published var cardProduction: Int = 2
+	 var cardProduction: Int = 2
 	
-	@Published var readyForNextRound: Bool = false
-	@Published var readyForNextPhase: Bool = false
+	 var readyForNextRound: Bool = false
+	 var readyForNextPhase: Bool = false
 	
-	@Published var selectedPhase: String = ""
+	 var selectedPhase: String = ""
 	
-	@Published var nextRoundPhase: PhaseOptions = .None
-	
-	init(playerName: String){
-		self.playerName = playerName
-	}
-	
-	init(playerName: String, player: GKPlayer, avatar: Image) {
-		self.playerName = playerName
-		self.player = player
-		self.avatar = avatar
-	}
-	
+	 var nextRoundPhase: PhaseOptions = .None
 }
+//class Player: ObservableObject, Identifiable{
+//	@Published var id = UUID()
+//
+//	@Published var playerName: String
+//	@Published var player: GKPlayer? = nil
+//	@Published var avatar = Image(systemName: "person.crop.circle")
+//	
+//	@Published var vp: Int = 0
+//	@Published var tr: Int = 0
+//	@Published var trees: Int = 0
+//	
+//	@Published var megaCoins: Int = 0
+//	@Published var megaCoinsProduction: Int = 4
+//	
+//	@Published var heat: Int = 0
+//	@Published var heatProduction: Int = 2
+//	
+//	@Published var plants: Int = 0
+//	@Published var plantsProduction: Int = 3
+//	
+//	@Published var steel: Int = 2
+//	@Published var steelDiscount: Int = 2
+//	@Published var titanium: Int = 3
+//	@Published var titaniumDiscount: Int = 3
+//	
+//	@Published var cardProduction: Int = 2
+//	
+//	@Published var readyForNextRound: Bool = false
+//	@Published var readyForNextPhase: Bool = false
+//	
+//	@Published var selectedPhase: String = ""
+//	
+//	@Published var nextRoundPhase: PhaseOptions = .None
+//	
+//	init(playerName: String){
+//		self.playerName = playerName
+//	}
+//	
+//	init(playerName: String, player: GKPlayer, avatar: Image) {
+//		self.playerName = playerName
+//		self.player = player
+//		self.avatar = avatar
+//	}
+//	
+//}
 
 
 @Model
