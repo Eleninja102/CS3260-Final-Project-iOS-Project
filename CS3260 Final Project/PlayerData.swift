@@ -33,7 +33,9 @@ enum Tags: String, Identifiable, CaseIterable, Codable{
 	var teamPlayerID: String
 	@Transient var avatar = Image(systemName: "person.crop.circle")
 	@Transient var player: GKPlayer?
-
+	var realVp: Int {
+		vp + tr
+	}
 	var vp: Int = 0
 	var tr: Int = 0
 	var trees: Int = 0

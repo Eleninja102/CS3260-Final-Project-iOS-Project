@@ -245,8 +245,18 @@ class GameKitTool: NSObject, ObservableObject, GKGameCenterControllerDelegate{
 			for player in match.players{
 				player.loadPhoto(for: GKPlayer.PhotoSize.small) { image, error in
 					if let image{
-						if !(self.activeGame?.opponents.contains(where: {$0.gamePlayerID == player.gamePlayerID}))!{
-							self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID, avatar: Image(uiImage: image), player: player))
+						DispatchQueue.main.async {
+							if let oppenent = self.activeGame?.opponents.first(where: {$0.gamePlayerID == player.gamePlayerID}){
+								print("Found Player")
+								oppenent.player = player
+								oppenent.teamPlayerID = player.teamPlayerID
+								oppenent.gamePlayerID = player.gamePlayerID
+								
+							}else{
+								
+									
+									self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID, avatar: Image(uiImage: image), player: player))
+							}
 						}
 						
 					}
