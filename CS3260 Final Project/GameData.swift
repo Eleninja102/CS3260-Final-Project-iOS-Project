@@ -40,7 +40,7 @@ class GameData: Identifiable{
 	@Relationship(deleteRule: .cascade) var opponents: [PlayerDetails] = []
 //	@Published var oppenents: [Player] = [Player(playerName: "Bob")]
 
-	@Relationship(deleteRule: .cascade) var userPlayer: PlayerDetails
+	@Relationship(deleteRule: .noAction) var userPlayer: PlayerDetails
 	@Relationship(deleteRule: .cascade) var winnerPlayer: PlayerDetails? = nil
 
 

@@ -24,11 +24,7 @@ struct GameSavesView: View {
 	func deleteGameData(_ indexSet: IndexSet){
 		for index in indexSet{
 			modelContext.delete(gameData[index])
-			do {
-			   try modelContext.save()
-			} catch {
-			   print(error)
-			}
+	
 		}
 	}
 	
@@ -107,7 +103,7 @@ struct saveListItem: View{
 					Text("Other Players:")
 					ForEach(save.opponents){ player in
 						HStack{
-							Text("\(player.playerName)")
+							Text("\(player.playerName) - \(player.realVp)")
 						}
 						
 					}
@@ -187,14 +183,10 @@ struct NewSaveView: View{
 				Button{
 					let newGame = GameData(
 						matchName: newSaveName,
-						userPlayer: gameKitTool.userPlayer!,
+						userPlayer: gameKitTool.userPlayer ?? PlayerDetails(playerName: "Null", gamePlayerID: "Null", teamPlayerID: "Null"),
 						oppenents: [])
 					modelContext.insert(newGame)
-					do {
-					   try modelContext.save()
-					} catch {
-					   print(error)
-					}
+
 					gameKitTool.startMatchmaking(gameData: newGame)
 				}label: {
 					Text("Start Game")
