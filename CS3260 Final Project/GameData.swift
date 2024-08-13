@@ -11,7 +11,7 @@ import SwiftUI
 import GameKit
 
 
-
+/// A struct to hold details about the ranges
 struct barControls: Codable{
 	var range: ClosedRange<Int>
 	var increament: Int
@@ -22,7 +22,7 @@ struct barControls: Codable{
 	var max: Int
 
 }
-
+/// A struct to hold data
 struct phaseDetails: Codable, Equatable{
 	var name: String
 	var playing: Int

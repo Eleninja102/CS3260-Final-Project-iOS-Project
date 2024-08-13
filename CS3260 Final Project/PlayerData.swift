@@ -11,19 +11,21 @@ import SwiftData
 import GameKit
 
 
+/// The Phase options a user can play
 enum PhaseOptions: String, Identifiable, CaseIterable, Codable{
 	case None, Development, Construction, Action, Production, Research
 	var id: Self {self}
 }
 
-enum Tags: String, Identifiable, CaseIterable{
+
+/// The Tags that a card can have
+enum Tags: String, Identifiable, CaseIterable, Codable{
 	case Building, Space, Power, Science, Jovian, Earth, Plant, Microbe
 	var id: Self {self}
 }
 
-
-@Model
-class PlayerDetails: Identifiable{
+/// The details about the player and the attributes they have
+@Model class PlayerDetails: Identifiable{
 	var id = UUID()
 	var playerName: String
 	
@@ -59,11 +61,11 @@ class PlayerDetails: Identifiable{
 	
 	var tagCollection: [Tags] = []
 	
-	init(id: UUID = UUID(), playerName: String, gamePlayerID: String,teamPlayerID: String, vp: Int = 0, tr: Int = 0, trees: Int = 0, megaCoins: Int = 0, megaCoinsProduction: Int =  0, heat: Int = 0, heatProduction: Int = 0, plants: Int = 0, plantsProduction: Int = 0, steel: Int = 0, steelDiscount: Int = 2, titanium: Int = 0, titaniumDiscount: Int = 0, cardProduction: Int = 0, readyForNextRound: Bool = false, readyForNextPhase: Bool = false, selectedPhase: String = "", nextRoundPhase: PhaseOptions = PhaseOptions.None, avatar: Image = Image(systemName: "person.crop.circle"), player: GKPlayer? = nil, tagCollection: [Tags] = []) {
+	init(id: UUID = UUID(), playerName: String, gamePlayerID: String,teamPlayerID: String, vp: Int = 0, tr: Int = 5, trees: Int = 0, megaCoins: Int = 0, megaCoinsProduction: Int =  0, heat: Int = 0, heatProduction: Int = 0, plants: Int = 0, plantsProduction: Int = 0, steel: Int = 0, steelDiscount: Int = 2, titanium: Int = 0, titaniumDiscount: Int = 0, cardProduction: Int = 0, readyForNextRound: Bool = false, readyForNextPhase: Bool = false, selectedPhase: String = "", nextRoundPhase: PhaseOptions = PhaseOptions.None, avatar: Image = Image(systemName: "person.crop.circle"), player: GKPlayer? = nil, tagCollection: [Tags] = []) {
 		
 		self.id = id
-		self.teamPlayerID = teamPlayerID
 		self.playerName = playerName
+		self.teamPlayerID = teamPlayerID
 		self.gamePlayerID = gamePlayerID
 		self.vp = vp
 		self.tr = tr

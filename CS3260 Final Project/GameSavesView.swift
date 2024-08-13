@@ -9,24 +9,27 @@ import SwiftUI
 import GameKit
 import SwiftData
 
+
+/// The List of Game Saves View
 struct GameSavesView: View {
 	@Environment(\.modelContext) var modelContext
 	@EnvironmentObject var gameKitTool: GameKitTool
 	@State private var showingSheet = false
-	@Query var gameData: [GameData]
+	@Query(sort: \GameData.creationDate) var gameData: [GameData]
 	@State var gameStated = true
 	
-	@State var defaultPlayer = Player(playerName: "Fake Bob")
 	
-	
-	
-	func startGame(){
-		
-	}
+	/// Deletes the game from swiftdata
+	/// - Parameter indexSet: the index set of the delete
 	func deleteGameData(_ indexSet: IndexSet){
 		for index in indexSet{
-			let game = gameData[index]
-			modelContext.delete(game)
+			let gameToDelete = gameData[index]
+			modelContext.delete(gameData[index])
+			do {
+			   try modelContext.save()
+			} catch {
+			   print(error)
+			}
 		}
 	}
 	
@@ -150,7 +153,10 @@ struct NewSaveView: View{
 		.toolbar{
 			ToolbarItem{
 				Button{
-					let newGame = GameData(matchName: newSaveName, userPlayer: PlayerDetails(playerName: gameKitTool.user!.displayName, gamePlayerID: gameKitTool.user!.gamePlayerID, teamPlayerID: gameKitTool.user!.teamPlayerID), oppenents: [])
+					let newGame = GameData(
+						matchName: newSaveName,
+						userPlayer: gameKitTool.userPlayer!,
+						oppenents: [])
 					modelContext.insert(newGame)
 					do {
 					   try modelContext.save()

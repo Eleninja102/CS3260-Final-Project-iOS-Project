@@ -15,21 +15,7 @@ extension GameKitTool: GKMatchDelegate {
 		switch state {
 		case .connected:
 			print("\(player.displayName) Connected")
-			if match.expectedPlayerCount == 0 {
-				for player in match.players{
-					player.loadPhoto(for: GKPlayer.PhotoSize.small) { (image, error) in
-						
-						if let image {
-							self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID, avatar: Image(uiImage: image) ))
-						}
-						if let error {
-							self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID))
-							print("Error: \(error.localizedDescription).")
-						}
-					}
-			
-				}
-			}
+
 
 		case .disconnected:
 			print("\(player.displayName) Disconnected")
@@ -119,3 +105,20 @@ extension GameKitTool: GKMatchDelegate {
 //	var amount: Int?
 //	var readyRound: Bool?
 //}
+
+
+//			if match.expectedPlayerCount == 0 {
+//				for player in match.players{
+//					player.loadPhoto(for: GKPlayer.PhotoSize.small) { (image, error) in
+//
+//						if let image {
+//							self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID, avatar: Image(uiImage: image) ))
+//						}
+//						if let error {
+//							self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID))
+//							print("Error: \(error.localizedDescription).")
+//						}
+//					}
+//
+//				}
+//			}

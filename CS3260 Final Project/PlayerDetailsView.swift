@@ -46,6 +46,7 @@ struct PlayerDetailsView: View {
 	
 	func resetForNextRound(){
 		playerDetails.selectedPhase = playerDetails.nextRoundPhase.rawValue
+		something = playerDetails.nextRoundPhase.rawValue
 
 		print("resetting \(playerDetails.selectedPhase)")
 
@@ -119,9 +120,7 @@ struct PlayerDetailsView: View {
 					 HStack(){
 						 Text(playerDetails.playerName)
 							 .font(.title)
-						 Text(playerDetails.selectedPhase)
 						 Text(something)
-
 						 Spacer()
 						 HStack{
 							 Text("TR: \(playerDetails.tr)")
@@ -298,10 +297,6 @@ struct PlayerDetailsView: View {
 							 HStack{
 								 Text("Waiting On Players to Choose Phase")
 							 }
-							 .onDisappear(perform: {
-								
-								
-							 })
 							 .onDisappear(perform: {
 								 resetForNextRound()
 								 
@@ -534,6 +529,7 @@ struct ConstuctionPhase: View{
 		temperature = 0
 		oceans = 0
 		cost = nil
+		vp = 0
 	}
 	var body: some View{
 		NavigationStack{

@@ -29,7 +29,8 @@ class GameKitTool: NSObject, ObservableObject, GKGameCenterControllerDelegate{
 	@Published var user: GKLocalPlayer? = nil
 
 	//	@Published var activeGame: GameData? = GameData(matchName: "bob"
-	var activeGame: GameData? = nil
+	@Published var activeGame: GameData? = nil
+	@Published var userPlayer: PlayerDetails? = nil
 
 //	@Published var myMatch: GKMatch? = nil
 	
@@ -76,50 +77,44 @@ class GameKitTool: NSObject, ObservableObject, GKGameCenterControllerDelegate{
 		})
 	}
 	
-
+		func authenticatePlayer(){
+			GKLocalPlayer.local.authenticateHandler = { viewController, error in
+				if let viewController = viewController {
+					// Present the view controller so the player can sign in.
+					self.rootViewController?.present(viewController, animated: true) { }
 	
-	func authenticatePlayer() {
-		// Set the authentication handler that GameKit invokes.
-		GKLocalPlayer.local.authenticateHandler = { viewController, error in
-			if let viewController = viewController {
-				// If the view controller is non-nil, present it to the player so they can
-				// perform some necessary action to complete authentication.
-				self.rootViewController?.present(viewController, animated: true) { }
-				return
-			}
-			if let error {
-				// If you can’t authenticate the player, disable Game Center features in your game.
-				print("Error: \(error.localizedDescription).")
-				return
-			}
-			
-			// A value of nil for viewController indicates successful authentication, and you can access
-			// local player properties.
-			
-			// Load the local player's avatar.
-			GKLocalPlayer.local.loadPhoto(for: GKPlayer.PhotoSize.small) { image, error in
-				if let image {
-					self.myAvatar = Image(uiImage: image)
+					return
 				}
 				if let error {
-					// Handle an error if it occurs.
+					// If you can’t authenticate the player, disable Game Center features in your game.
 					print("Error: \(error.localizedDescription).")
+					return
 				}
+				
+				GKLocalPlayer.local.register(self)
+				GKLocalPlayer.local.loadPhoto(for: GKPlayer.PhotoSize.small) { image, error in
+					if let image {
+						self.userPlayer = PlayerDetails(playerName: GKLocalPlayer.local.displayName, gamePlayerID: GKLocalPlayer.local.gamePlayerID, teamPlayerID: GKLocalPlayer.local.teamPlayerID, avatar: Image(uiImage: image))
+						self.myAvatar = Image(uiImage: image)
+	
+						self.user = GKLocalPlayer.local
+	
+					}
+					if let error {
+						print("Error With Photo Loading: \(error.localizedDescription).")
+					}
+				}
+	
+				// Player was successfully authenticated.
+				// Check if there are any player restrictions before starting the game.
+	
+	
+	
+				self.matchAvailable = true
 			}
-
-			// Register for real-time invitations from other players.
-			GKLocalPlayer.local.register(self)
-			
-			// Add an access point to the interface.
-			GKAccessPoint.shared.location = .topLeading
-			GKAccessPoint.shared.showHighlights = true
-			GKAccessPoint.shared.isActive = true
-			self.user = GKLocalPlayer()
-			
-			// Enable the Start Game button.
-			self.matchAvailable = true
 		}
-	}
+	
+	
 	
 	
 	func makeMatch() {
@@ -183,10 +178,17 @@ class GameKitTool: NSObject, ObservableObject, GKGameCenterControllerDelegate{
 		let request = GKMatchRequest()
 		request.minPlayers = minPlayers
 		request.maxPlayers = maxPlayers
-		if let matchMakingVs = GKMatchmakerViewController(matchRequest: request){
-			matchMakingVs.matchmakerDelegate = self
-			rootViewController?.present(matchMakingVs, animated: true) { }
+		if let viewController = GKMatchmakerViewController(matchRequest: request) {
+			viewController.matchmakerDelegate = self
+			rootViewController?.present(viewController, animated: true) { }
 		}
+//
+//		if let match = activeGame?.myMatch{
+//			startMyMatchWith(match: match)
+//			
+//			GKMatchmaker.shared().finishMatchmaking(for: match)
+//		}
+
 	}
 	
 	func sendPhase(_ nextPhase: PhaseOptions){
@@ -241,21 +243,23 @@ class GameKitTool: NSObject, ObservableObject, GKGameCenterControllerDelegate{
 		
 		if match.expectedPlayerCount == 0 {
 			for player in match.players{
-				player.loadPhoto(for: GKPlayer.PhotoSize.small) { (image, error) in
-					
-					if let image {
-						self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID, avatar: Image(uiImage: image) ))
+				player.loadPhoto(for: GKPlayer.PhotoSize.small) { image, error in
+					if let image{
+						if !(self.activeGame?.opponents.contains(where: {$0.gamePlayerID == player.gamePlayerID}))!{
+							self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID, avatar: Image(uiImage: image), player: player))
+						}
+						
 					}
 					if let error {
-						self.activeGame?.opponents.append(PlayerDetails(playerName: player.displayName, gamePlayerID: player.gamePlayerID, teamPlayerID: player.teamPlayerID))
-						print("Error: \(error.localizedDescription).")
+						print("Error of The Starting: \(error.localizedDescription).")
 					}
 				}
 		
 			}
-			playingGame = true
 
 		}
+		playingGame = true
+
 	}
 	
 }
