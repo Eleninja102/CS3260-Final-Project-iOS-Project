@@ -107,7 +107,7 @@ struct saveListItem: View{
 					Text("Other Players:")
 					ForEach(save.opponents){ player in
 						HStack{
-							Text("\(player.playerName) - \(player.realVp)")
+							Text("\(player.playerName)")
 						}
 						
 					}
@@ -115,7 +115,7 @@ struct saveListItem: View{
 			}
 			Spacer()
 			NavigationLink{
-				EditSaveView(newSaveName: save.matchName, gameData: save)
+				EditSaveView(gameData: save)
 
 			}label: {
 				
@@ -127,12 +127,11 @@ struct saveListItem: View{
 struct EditSaveView: View {
 	@Environment(\.modelContext) var modelContext
 	@EnvironmentObject var gameKitTool: GameKitTool
-	@State var newSaveName: String
 	@Bindable var gameData: GameData
 	var body: some View {
 		Form{
 			Section{
-				TextField(text: $newSaveName){
+				TextField(text: $gameData.matchName){
 					Text("Save Name")
 				}
 			}header: {
@@ -144,6 +143,7 @@ struct EditSaveView: View {
 			}header: {
 				Text("Player Details")
 			}
+
 		}
 		.toolbar{
 			ToolbarItem{
@@ -152,7 +152,7 @@ struct EditSaveView: View {
 				}label: {
 					Text("Start Game")
 				}
-				.disabled(newSaveName == "")
+				.disabled(gameData.matchName == "")
 			}
 		}
 	}

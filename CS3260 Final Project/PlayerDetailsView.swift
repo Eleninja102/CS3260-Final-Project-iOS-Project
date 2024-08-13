@@ -267,13 +267,13 @@ struct PlayerDetailsView: View {
 					EndRound(playerDetails: playerDetails, gameData: gameData, movingToNextRound: $movingToNextRound)
 				}
 				Spacer()
-				 Button(action: {
-					 for oppenent in gameData.opponents.indices {
-						 gameData.opponents[oppenent].readyForNextPhase = true
-					 }
-				 }){
-						 Text("Ready Up Everyone")
-					 }
+//				 Button(action: {
+//					 for oppenent in gameData.opponents.indices {
+//						 gameData.opponents[oppenent].readyForNextPhase = true
+//					 }
+//				 }){
+//						 Text("Ready Up Everyone")
+//					 }
 				 
 				 Button{
 					 gameKitTool.playingGame = false
@@ -281,13 +281,13 @@ struct PlayerDetailsView: View {
 					 Text("Exit Game")
 				 }
 				 
-				 Button(action: {
-					 for oppenent in gameData.opponents.indices {
-						 gameData.opponents[oppenent].readyForNextRound = true
-					 }
-					}){
-						 Text("Ready Up Round")
-					 }
+//				 Button(action: {
+//					 for oppenent in gameData.opponents.indices {
+//						 gameData.opponents[oppenent].readyForNextRound = true
+//					 }
+//					}){
+//						 Text("Ready Up Round")
+//					 }
 				
 			}
 			 .toolbar{
