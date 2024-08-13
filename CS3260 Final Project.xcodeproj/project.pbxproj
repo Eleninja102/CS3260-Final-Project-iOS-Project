@@ -8,9 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1D0DE1582C53372900C1E064 /* GameSavesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0DE1572C53372900C1E064 /* GameSavesView.swift */; };
-		1D0DE15A2C53411100C1E064 /* GameDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0DE1592C53411100C1E064 /* GameDetails.swift */; };
 		1D0DE1602C53455C00C1E064 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0DE15F2C53455C00C1E064 /* PlayerDetailsView.swift */; };
 		1D27AC162C673DAD003CE4CC /* BarControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D27AC152C673DAD003CE4CC /* BarControlsView.swift */; };
+		1D2FF9D92C699E570065349D /* GameKitTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FF9D82C699E570065349D /* GameKitTool.swift */; };
+		1D2FF9DB2C699F6E0065349D /* GameKitTool+Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FF9DA2C699F6E0065349D /* GameKitTool+Friends.swift */; };
+		1D2FF9DD2C69A03C0065349D /* GameKitTool+GKMatchmakerViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FF9DC2C69A03C0065349D /* GameKitTool+GKMatchmakerViewControllerDelegate.swift */; };
+		1D2FF9DF2C69A07C0065349D /* GameKItTool+MatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FF9DE2C69A07C0065349D /* GameKItTool+MatchData.swift */; };
+		1D2FF9E12C69A0B70065349D /* GameKitTool+GKLocalPlayerListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FF9E02C69A0B70065349D /* GameKitTool+GKLocalPlayerListener.swift */; };
+		1D2FF9E32C69A21D0065349D /* GameKitTool+GKMatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FF9E22C69A21D0065349D /* GameKitTool+GKMatchDelegate.swift */; };
+		1D2FF9E52C69D49B0065349D /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2FF9E42C69D49B0065349D /* GameData.swift */; };
 		1D3629F42C61C68C007F05A4 /* CardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3629F32C61C68C007F05A4 /* CardList.swift */; };
 		1D3629FB2C61D39D007F05A4 /* Project Cards.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1D3629FA2C61D39D007F05A4 /* Project Cards.csv */; };
 		1D3629FE2C6341E4007F05A4 /* GameCenterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3629FD2C6341E3007F05A4 /* GameCenterController.swift */; };
@@ -24,7 +30,7 @@
 		1D631A702BEDA43200452D02 /* CS3260_Final_ProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D631A6F2BEDA43200452D02 /* CS3260_Final_ProjectUITests.swift */; };
 		1D631A722BEDA43200452D02 /* CS3260_Final_ProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D631A712BEDA43200452D02 /* CS3260_Final_ProjectUITestsLaunchTests.swift */; };
 		1D631A822BEDA56A00452D02 /* GameSaves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D631A812BEDA56A00452D02 /* GameSaves.swift */; };
-		1D631A842BEDAFD600452D02 /* Moonrakers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D631A832BEDAFD600452D02 /* Moonrakers.swift */; };
+		1DFA8B812C6AF4CD00C87B14 /* PlayerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFA8B802C6AF4CD00C87B14 /* PlayerData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,9 +52,15 @@
 
 /* Begin PBXFileReference section */
 		1D0DE1572C53372900C1E064 /* GameSavesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSavesView.swift; sourceTree = "<group>"; };
-		1D0DE1592C53411100C1E064 /* GameDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetails.swift; sourceTree = "<group>"; };
 		1D0DE15F2C53455C00C1E064 /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
 		1D27AC152C673DAD003CE4CC /* BarControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarControlsView.swift; sourceTree = "<group>"; };
+		1D2FF9D82C699E570065349D /* GameKitTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameKitTool.swift; sourceTree = "<group>"; };
+		1D2FF9DA2C699F6E0065349D /* GameKitTool+Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameKitTool+Friends.swift"; sourceTree = "<group>"; };
+		1D2FF9DC2C69A03C0065349D /* GameKitTool+GKMatchmakerViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameKitTool+GKMatchmakerViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		1D2FF9DE2C69A07C0065349D /* GameKItTool+MatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameKItTool+MatchData.swift"; sourceTree = "<group>"; };
+		1D2FF9E02C69A0B70065349D /* GameKitTool+GKLocalPlayerListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameKitTool+GKLocalPlayerListener.swift"; sourceTree = "<group>"; };
+		1D2FF9E22C69A21D0065349D /* GameKitTool+GKMatchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameKitTool+GKMatchDelegate.swift"; sourceTree = "<group>"; };
+		1D2FF9E42C69D49B0065349D /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		1D3629F32C61C68C007F05A4 /* CardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardList.swift; sourceTree = "<group>"; };
 		1D3629FA2C61D39D007F05A4 /* Project Cards.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Project Cards.csv"; sourceTree = "<group>"; };
 		1D3629FC2C633AB3007F05A4 /* CS3260 Final Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CS3260 Final Project.entitlements"; sourceTree = "<group>"; };
@@ -66,8 +78,8 @@
 		1D631A6F2BEDA43200452D02 /* CS3260_Final_ProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CS3260_Final_ProjectUITests.swift; sourceTree = "<group>"; };
 		1D631A712BEDA43200452D02 /* CS3260_Final_ProjectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CS3260_Final_ProjectUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1D631A812BEDA56A00452D02 /* GameSaves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSaves.swift; sourceTree = "<group>"; };
-		1D631A832BEDAFD600452D02 /* Moonrakers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moonrakers.swift; sourceTree = "<group>"; };
 		1DD34A982C6803EE00232A19 /* CS3260-Final-Project-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CS3260-Final-Project-Info.plist"; sourceTree = SOURCE_ROOT; };
+		1DFA8B802C6AF4CD00C87B14 /* PlayerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,15 +145,21 @@
 				1D3629FA2C61D39D007F05A4 /* Project Cards.csv */,
 				1D631A522BEDA43100452D02 /* CS3260_Final_ProjectApp.swift */,
 				1D631A542BEDA43100452D02 /* ContentView.swift */,
-				1D0DE1592C53411100C1E064 /* GameDetails.swift */,
+				1D0DE1572C53372900C1E064 /* GameSavesView.swift */,
 				1D0DE15F2C53455C00C1E064 /* PlayerDetailsView.swift */,
 				1D27AC152C673DAD003CE4CC /* BarControlsView.swift */,
 				1D3629F32C61C68C007F05A4 /* CardList.swift */,
-				1D0DE1572C53372900C1E064 /* GameSavesView.swift */,
 				1D631A562BEDA43100452D02 /* Item.swift */,
 				1D631A812BEDA56A00452D02 /* GameSaves.swift */,
+				1DFA8B802C6AF4CD00C87B14 /* PlayerData.swift */,
+				1D2FF9E42C69D49B0065349D /* GameData.swift */,
 				1D3629FD2C6341E3007F05A4 /* GameCenterController.swift */,
-				1D631A832BEDAFD600452D02 /* Moonrakers.swift */,
+				1D2FF9D82C699E570065349D /* GameKitTool.swift */,
+				1D2FF9E22C69A21D0065349D /* GameKitTool+GKMatchDelegate.swift */,
+				1D2FF9E02C69A0B70065349D /* GameKitTool+GKLocalPlayerListener.swift */,
+				1D2FF9DA2C699F6E0065349D /* GameKitTool+Friends.swift */,
+				1D2FF9DC2C69A03C0065349D /* GameKitTool+GKMatchmakerViewControllerDelegate.swift */,
+				1D2FF9DE2C69A07C0065349D /* GameKItTool+MatchData.swift */,
 				1D631A582BEDA43200452D02 /* Assets.xcassets */,
 				1D631A5A2BEDA43200452D02 /* Preview Content */,
 			);
@@ -304,15 +322,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D2FF9DB2C699F6E0065349D /* GameKitTool+Friends.swift in Sources */,
 				1D0DE1602C53455C00C1E064 /* PlayerDetailsView.swift in Sources */,
-				1D631A842BEDAFD600452D02 /* Moonrakers.swift in Sources */,
 				1D631A552BEDA43100452D02 /* ContentView.swift in Sources */,
 				1D631A572BEDA43100452D02 /* Item.swift in Sources */,
 				1D3629F42C61C68C007F05A4 /* CardList.swift in Sources */,
+				1DFA8B812C6AF4CD00C87B14 /* PlayerData.swift in Sources */,
 				1D0DE1582C53372900C1E064 /* GameSavesView.swift in Sources */,
 				1D631A822BEDA56A00452D02 /* GameSaves.swift in Sources */,
-				1D0DE15A2C53411100C1E064 /* GameDetails.swift in Sources */,
+				1D2FF9DF2C69A07C0065349D /* GameKItTool+MatchData.swift in Sources */,
+				1D2FF9D92C699E570065349D /* GameKitTool.swift in Sources */,
 				1D3629FE2C6341E4007F05A4 /* GameCenterController.swift in Sources */,
+				1D2FF9DD2C69A03C0065349D /* GameKitTool+GKMatchmakerViewControllerDelegate.swift in Sources */,
+				1D2FF9E32C69A21D0065349D /* GameKitTool+GKMatchDelegate.swift in Sources */,
+				1D2FF9E12C69A0B70065349D /* GameKitTool+GKLocalPlayerListener.swift in Sources */,
+				1D2FF9E52C69D49B0065349D /* GameData.swift in Sources */,
 				1D27AC162C673DAD003CE4CC /* BarControlsView.swift in Sources */,
 				1D631A532BEDA43100452D02 /* CS3260_Final_ProjectApp.swift in Sources */,
 			);

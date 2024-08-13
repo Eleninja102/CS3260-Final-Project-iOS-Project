@@ -62,7 +62,8 @@ struct SomeBiew: View {
 		purpleRange: -30...(-20),
 		redRange: -18...(-10),
 		yellowRange: -8...0,
-		whiteRange: 2...8
+		whiteRange: 2...8,
+		max: 8
 	)
 	
 	var body: some View {

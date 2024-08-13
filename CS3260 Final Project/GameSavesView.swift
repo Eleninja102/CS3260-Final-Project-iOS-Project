@@ -7,22 +7,27 @@
 
 import SwiftUI
 import GameKit
+import SwiftData
 
 struct GameSavesView: View {
-
+	@Environment(\.modelContext) var modelContext
+	@EnvironmentObject var gameKitTool: GameKitTool
 	@State private var showingSheet = false
-	@ObservedObject var game: GameKitController
+	@Query var gameData: [GameData]
 	@State var gameStated = true
 	
 	@State var defaultPlayer = Player(playerName: "Fake Bob")
-	private let dateFormatter: DateFormatter = {
-		   let formatter = DateFormatter()
-		   formatter.dateStyle = .medium
-		   return formatter
-	   }()
+	
+	
 	
 	func startGame(){
 		
+	}
+	func deleteGameData(_ indexSet: IndexSet){
+		for index in indexSet{
+			let game = gameData[index]
+			modelContext.delete(game)
+		}
 	}
 	
     var body: some View {
@@ -30,76 +35,36 @@ struct GameSavesView: View {
 			
 			List{
 				Section{
+					ForEach(gameData.filter{$0.gameFinished == false}, id: \.id){ save in
+						
+						saveListItem(save: save)
+					}
 					
-					ForEach(game.savedGames, id: \.id){ save in
-						HStack{
-							VStack(alignment: .leading){
-								Text("\(save.matchName)")
-								Text(dateFormatter.string(from: save.creationDate))
-								HStack{
-									Text("Other Players:")
-									ForEach(save.opponents){ player in
-										HStack{
-											Text("\(player.playerName) - \(player.vp)")
-										}
-										
-									}
-								}
-							}
-							Spacer()
-							Button{
-								game.loadSavedGame(savedGame: save)
-							}label: {
-								Image(systemName: "arrowtriangle.forward")
-									.bold()
-							}
-						}
-						
-						
-						}
-						
-					.onDelete(perform: { indexSet in
-						game.savedGames.remove(atOffsets: indexSet)
-					})
-					.onMove { game.savedGames.move(fromOffsets: $0, toOffset: $1) }
+					.onDelete(perform: deleteGameData)
 				}header: {
 					Text("Active Saves")
 				}
-//				Section{
-//					ForEach(completedGames){ save in
-//							VStack(alignment: .leading){
-//								Text(save.saveName)
-//								Text(dateFormatter.string(from: save.creationDate))
-//								HStack{
-//									Text("Players:")
-//									ForEach(save.Players){ player in
-//										Text(player.playerName)
-//									}
-//								}
-//								
-//						}
-//						
-//					}
-//					.onDelete(perform: { indexSet2 in
-//						completedGames.remove(atOffsets: indexSet2)
-//					})
-//					.onMove { completedGames.move(fromOffsets: $0, toOffset: $1) }
-//					
-//				}header: {
-//					Text("Completed Saves")
-//				}
-
+				
+				Section{
+					ForEach(gameData.filter{$0.gameFinished == true}, id: \.id){ save in
+						
+						saveListItem(save: save)
+					}
+					
+					.onDelete(perform: deleteGameData)
+				}header: {
+					Text("Completed Saves")
+				}
 			}
+			
 			.navigationTitle("Saves")
 			.toolbar{
-				NavigationLink(destination: NewSaveView(game: game)) {
-					Text("New Game")
-				}
+				NavigationLink("New Game", destination: NewSaveView())
 				EditButton()
 				
 			}
-			.fullScreenCover(isPresented: $game.playingGame, content: {
-				PlayerDetailsView(playerDetails: Binding($game.userPlayer) ?? $defaultPlayer, gameKitContoller: game, game: game.activeGame!)
+			.fullScreenCover(isPresented: $gameKitTool.playingGame, content: {
+				PlayerDetailsView(gameData: gameKitTool.activeGame!)
 			})
 			
 	
@@ -108,13 +73,62 @@ struct GameSavesView: View {
 }
 
 #Preview {
-	GameSavesView(game: GameKitController())
+	do{
+		let config = ModelConfiguration(isStoredInMemoryOnly: true)
+		let container = try ModelContainer(for: GameData.self, configurations: config)
+  		let testGame = GameData(matchName: "Nothing", userPlayer: PlayerDetails(playerName: "Coleton", gamePlayerID: "Coleton2", teamPlayerID: "Coleton"), oppenents: [PlayerDetails(playerName: "Bob", gamePlayerID: "Bob", teamPlayerID: "Bo2b")])
+		container.mainContext.insert(testGame)
+		
+		return GameSavesView()
+			.environmentObject(GameKitTool())
+			.modelContainer(container)
+			
+
+	}
+	catch{
+		return Text("Failed To load View")
+	}
+}
+
+struct saveListItem: View{
+	@Bindable var save: GameData
+	@EnvironmentObject var gameKitTool: GameKitTool
+
+	var body: some View{
+		HStack{
+			VStack(alignment: .leading){
+				Text("\(save.matchName)")
+				Text(save.creationDate.formatted(date: .long, time: .omitted))
+				Text("Player: \(save.userPlayer.playerName) VP: \(save.userPlayer.vp)")
+				HStack{
+					Text("Other Players:")
+					ForEach(save.opponents){ player in
+						HStack{
+							Text("\(player.playerName) - \(player.vp)")
+						}
+						
+					}
+				}
+			}
+			Spacer()
+			Button{
+				gameKitTool.startMatchmaking(gameData: save)
+
+			}label: {
+				Image(systemName: "arrowtriangle.forward")
+					.bold()
+			}
+		}
+	}
 }
 
 struct NewSaveView: View{
-	@ObservedObject var game: GameKitController
+	@Environment(\.modelContext) var modelContext
+	@EnvironmentObject var gameKitTool: GameKitTool
+
+	@Query var gameData: [GameData]
+
 	@State var newSaveName: String = ""
-	@State var playerName: String = ""
 	
 	
 	var body: some View{
@@ -128,7 +142,7 @@ struct NewSaveView: View{
 			}
 			
 			Section{
-				Text("\(game.user?.displayName ?? "")")
+				Text("\(gameKitTool.user?.displayName ?? "")")
 			}header: {
 				Text("Player Details")
 			}
@@ -136,11 +150,18 @@ struct NewSaveView: View{
 		.toolbar{
 			ToolbarItem{
 				Button{
-					game.gameSaveName = newSaveName
-					game.startMatchmaking()
+					let newGame = GameData(matchName: newSaveName, userPlayer: PlayerDetails(playerName: gameKitTool.user!.displayName, gamePlayerID: gameKitTool.user!.gamePlayerID, teamPlayerID: gameKitTool.user!.teamPlayerID), oppenents: [])
+					modelContext.insert(newGame)
+					do {
+					   try modelContext.save()
+					} catch {
+					   print(error)
+					}
+					gameKitTool.startMatchmaking(gameData: newGame)
 				}label: {
 					Text("Start Game")
 				}
+				.disabled(newSaveName == "")
 			}
 		}
 	}
